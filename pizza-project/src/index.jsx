@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom/client";
 import React from "react";
+import "./style.css";
 
 const pizzaData = [
   {
@@ -45,27 +46,77 @@ const pizzaData = [
     soldOut: false,
   },
 ];
-
+/// parent componenet
 const App = () => {
   return (
     <div>
-      <h1>hello react !!! </h1>
-      <Pizza />
-      <Pizza />
-      <Pizza />
-      <Pizza />
-      <Pizza />
+      <Header />
+     
+      <Menu />
+      <Footer />
     </div>
   );
 };
 
 function Pizza() {
   return (
-    <div>
+    <div className="card">
       <img src="pizzas/spinaci.jpg" alt="" />
-      <h2>pizza spinaci</h2>
-      <p> Tomato, mozarella, spinach, and ricotta cheese</p>
+  <div className="info">
+        <h2>pizza spinaci</h2>
+        <p> Tomato, mozarella, spinach, and ricotta cheese</p>
+        <strong>10</strong>
+  </div>
     </div>
+  );
+}
+
+function Header() {
+  // const x = {
+  //   color: "red",
+  //   fontSize: "80px",
+  //   backgroundColor: "green",
+  //   border: "solid",
+  // };
+  // return <h1 style={x}>Fast React Pizza Co.</h1>;
+  return (
+    <header>
+      <h1 className="title">Fast React Pizza Co.</h1>
+    </header>
+  );
+}
+
+function Menu() {
+  return (
+    <div>
+      <h2 className="menu-title">Our menu</h2>
+ <div className="card-container">
+       <Pizza />
+       <Pizza />
+       <Pizza />
+       <Pizza />
+       <Pizza />
+       <Pizza />
+       <Pizza />
+       <Pizza />
+       <Pizza />
+ </div>
+    </div>
+  );
+}
+
+
+
+function Footer() {
+  const hour = new Date().getHours(); /// 20
+  const openHour = 10;
+  const closeHour = 22;
+
+  //  if (hour >= openHour && hour<=closeHour) alert ("We're currently open")
+  //   else alert ("We're currently closed")
+
+  return (
+    <footer>{new Date().toLocaleTimeString()} We're currently open </footer>
   );
 }
 
