@@ -51,25 +51,12 @@ const App = () => {
   return (
     <div>
       <Header />
-     
+
       <Menu />
       <Footer />
     </div>
   );
 };
-
-function Pizza() {
-  return (
-    <div className="card">
-      <img src="pizzas/spinaci.jpg" alt="" />
-  <div className="info">
-        <h2>pizza spinaci</h2>
-        <p> Tomato, mozarella, spinach, and ricotta cheese</p>
-        <strong>10</strong>
-  </div>
-    </div>
-  );
-}
 
 function Header() {
   // const x = {
@@ -90,22 +77,37 @@ function Menu() {
   return (
     <div>
       <h2 className="menu-title">Our menu</h2>
- <div className="card-container">
-       <Pizza />
-       <Pizza />
-       <Pizza />
-       <Pizza />
-       <Pizza />
-       <Pizza />
-       <Pizza />
-       <Pizza />
-       <Pizza />
- </div>
+      <div className="card-container">
+        <Pizza
+          name="pizza spinaci"
+          ingredients="Tomato, mozarella, spinach, and ricotta cheese"
+          photoName="pizzas/spinaci.jpg"
+          price="10"
+        />
+
+        <Pizza
+          name="pizza funghi"
+          ingredients="Tomato, mozarella, spinach, and ricotta cheese"
+          photoName="pizzas/funghi.jpg"
+          price="10"
+        />
+      </div>
     </div>
   );
 }
-
-
+function Pizza(props) {
+  console.log("props in pizza component :", props);
+  return (
+    <div className="card">
+      <img src={props.photoName} alt="" />
+      <div className="info">
+        <h2>{props.name}</h2>
+        <p> {props.ingredients} </p>
+        <strong>{props.price}</strong>
+      </div>
+    </div>
+  );
+}
 
 function Footer() {
   const hour = new Date().getHours(); /// 20
