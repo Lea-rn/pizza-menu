@@ -73,52 +73,72 @@ function Header() {
   );
 }
 
+
+/// 0 , false , undefined , NAN , null 
 function Menu() {
+  const pizzas = pizzaData
+  const numPizza = pizzas.length  /// === 0  ; 6
+  
   return (
     <div>
       <h2 className="menu-title">Our menu</h2>
-      <div className="card-container">
-        <Pizza
-          name="pizza spinaci"
-          ingredients="Tomato, mozarella, spinach, and ricotta cheese"
-          photoName="pizzas/spinaci.jpg"
-          price="10"
-        />
+ 
+   
 
-        <Pizza
-          name="pizza funghi"
-          ingredients="Tomato, mozarella, spinach, and ricotta cheese"
-          photoName="pizzas/funghi.jpg"
-          price="10"
-        />
-      </div>
+        {/* {pizzaData.map((pizza) => (
+          <Pizza
+            photoName={pizza.photoName}
+            name={pizza.name}
+            ingredients={pizza.ingredients}
+            price={pizza.price}
+          />
+        ))} */}  
+
+
+    {numPizza && <div  className="card-container">
+      {pizzas.map((pizza) => (
+          <Pizza pizzaObj={pizza} key={pizza.name} />
+        ))}
+      </div>}
+     
+      
     </div>
   );
+  
 }
 function Pizza(props) {
-  console.log("props in pizza component :", props);
   return (
+
     <div className="card">
-      <img src={props.photoName} alt="" />
+      <img src={props.pizzaObj.photoName} alt="we will fix that" />
       <div className="info">
-        <h2>{props.name}</h2>
-        <p> {props.ingredients} </p>
-        <strong>{props.price}</strong>
+        <h2>{props.pizzaObj.name}</h2>
+        <p> {props.pizzaObj.ingredients} </p>
+        <strong>{props.pizzaObj.price + 3}</strong>
       </div>
     </div>
   );
 }
 
 function Footer() {
-  const hour = new Date().getHours(); /// 20
+  const hour = new Date().getHours(); /// 21
   const openHour = 10;
   const closeHour = 22;
+
+  const isOpen = hour >= openHour && hour <= closeHour;
+  console.log(isOpen);
 
   //  if (hour >= openHour && hour<=closeHour) alert ("We're currently open")
   //   else alert ("We're currently closed")
 
   return (
-    <footer>{new Date().toLocaleTimeString()} We're currently open </footer>
+    <footer>
+    
+      {isOpen && (
+        <p>We're open until {closeHour}:00 . Come visit us or order online</p>
+      )}
+      <button> Order</button>
+    </footer>
   );
 }
 
