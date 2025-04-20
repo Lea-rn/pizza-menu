@@ -89,3 +89,9 @@ button {
 button:hover {
     transform: scale(1.1,1.1);
 }
+
+.soldout{
+    color: rgb(107, 106, 106);
+    opacity: 0.6;
+}
+

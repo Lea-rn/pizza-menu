@@ -8,7 +8,7 @@ const pizzaData = [
     ingredients: "Bread with italian olive oil and rosemary",
     price: 6,
     photoName: "pizzas/focaccia.jpg",
-    soldOut: false,
+    soldOut: true,
   },
   {
     name: "Pizza Margherita",
@@ -73,72 +73,112 @@ function Header() {
   );
 }
 
-
-/// 0 , false , undefined , NAN , null 
+/// 0 , false , undefined , NAN , null
 function Menu() {
-  const pizzas = pizzaData
-  const numPizza = pizzas.length  /// === 0  ; 6
-  
+  const pizzas = pizzaData;
+  const numPizza = pizzas.length; /// === 0  ; 6
+  const myStyle = {
+    textAlign: "center",
+    marginBottom: "450px",
+    marginTop: "300px",
+    fontSize: "50px",
+  };
+
+  const myStyle2 = {
+    width: "30%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    textAlign: "center",
+    marginBottom: "100px",
+    fontSize: "20px",
+  };
+
   return (
     <div>
       <h2 className="menu-title">Our menu</h2>
- 
-   
 
-        {/* {pizzaData.map((pizza) => (
+      {/* {pizzaData.map((pizza) => (
           <Pizza
             photoName={pizza.photoName}
             name={pizza.name}
             ingredients={pizza.ingredients}
             price={pizza.price}
           />
-        ))} */}  
+        ))} */}
 
-
-    {numPizza && <div  className="card-container">
+      {/* ///// conditional rendering with & operator :  */}
+      {/* {numPizza > 0  && <div  className="card-container">
       {pizzas.map((pizza) => (
           <Pizza pizzaObj={pizza} key={pizza.name} />
         ))}
       </div>}
-     
-      
+      */}
+
+      {/* conditional rendering with ternary operator ::  */}
+
+      {numPizza > 0 ? (
+        <>
+          <p style={myStyle2}>
+            Authentic Italian cuisine . 6 creative dishes to choose from . All
+            from our stone oven . all organic , all delicious
+          </p>
+          <div className="card-container">
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <p style={myStyle}>
+          We 're still working on our menu . Please come back later 😊
+        </p>
+      )}
     </div>
   );
-  
 }
-function Pizza(props) {
+function Pizza({ pizzaObj }) {
+  // early return (third conditional rendering)  :
+  // if (pizzaObj.soldOut) return null;
   return (
-
-    <div className="card">
-      <img src={props.pizzaObj.photoName} alt="we will fix that" />
+    <div className={`card ${pizzaObj.soldOut ? "soldout" : ""}`}>
+      <img src={pizzaObj.photoName} alt="we will fix that" />
       <div className="info">
-        <h2>{props.pizzaObj.name}</h2>
-        <p> {props.pizzaObj.ingredients} </p>
-        <strong>{props.pizzaObj.price + 3}</strong>
+        <h2>{pizzaObj.name}</h2>
+        <p> {pizzaObj.ingredients} </p>
+        <strong>{pizzaObj.soldOut ? "Sold Out" : pizzaObj.price}</strong>
+        {/* {pizzaObj.soldOut ? ( <h1>soldout</h1>) : (<p>{pizzaObj.price}</p>)} */}
       </div>
     </div>
   );
 }
 
 function Footer() {
-  const hour = new Date().getHours(); /// 21
+  // const hour = new Date().getHours(); /// 21
+  const hour = 20;
   const openHour = 10;
   const closeHour = 22;
 
   const isOpen = hour >= openHour && hour <= closeHour;
-  console.log(isOpen);
-
-  //  if (hour >= openHour && hour<=closeHour) alert ("We're currently open")
-  //   else alert ("We're currently closed")
 
   return (
     <footer>
-    
-      {isOpen && (
-        <p>We're open until {closeHour}:00 . Come visit us or order online</p>
+      {isOpen ? (
+        <Order closeHour={closeHour} />
+      ) : (
+        <p style={{ fontSize: "20px" }}>
+          We're happy to welcome you between {openHour}:00 and {closeHour}:00 😊
+        </p>
       )}
-      <button> Order</button>
     </footer>
+  );
+}
+
+function Order({ closeHour }) {
+  return (
+    <div>
+      <p>We're open until {closeHour}:00 . Come visit us or order online</p>
+      <button> Order</button>
+    </div>
   );
 }
 
@@ -149,3 +189,11 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+// fotter componenet first version ::
+// <footer>
+//   {isOpen && (
+//     <p>We're open until {closeHour}:00 . Come visit us or order online</p>
+//   )}
+//   <button> Order</button>
+// </footer>
